@@ -1,244 +1,410 @@
-# DataPilot — Local AI Data Analyst
+# 🚀 DataPilot — AI-Powered CSV Data Analyst
 
-## Overview
+**Chat with your data. Discover insights. Create interactive visualizations.**
 
-DataPilot is a beginner-friendly, AI-powered CSV analysis application built with Python, Pandas, Streamlit, and Ollama. It allows users to upload tabular data and ask questions in natural language.
+DataPilot is an AI-powered data analysis application built with Python and Streamlit. It lets users upload CSV datasets, ask questions in natural language, run data-analysis tools, and explore results through interactive charts.
 
-The application uses a locally running language model to interpret questions and select appropriate analysis tools. Pandas performs the numerical analysis, and the agent uses the tool results to formulate answers.
+DataPilot supports two AI backends:
+- **Google Gemini** — cloud-based AI analysis.
+- **Ollama** — local AI analysis using a locally installed model.
 
-Model inference runs locally on your computer, so no hosted AI API key is required.
+It also includes SQLite-based persistent memory for saved preferences and interactive Plotly charts.
 
-## Features
+---
 
-- Upload and analyze CSV datasets.
-- Inspect dataset structure, columns, data types, and missing values.
-- Calculate summary statistics.
-- Group data and perform aggregations.
-- Analyze correlations between numeric columns.
-- Detect potential outliers using the interquartile range (IQR).
-- Analyze trends using date-based aggregation.
-- Save and retrieve persistent memories through the application's memory interface.
-- Run the AI model locally using Ollama.
+## ✨ Features
 
-## Technology Stack
+### 🤖 Dual AI Backend
+- Use Google Gemini through the Gemini API.
+- Use Ollama to run a local language model.
+- Switch between supported providers in the application.
+- Use tool-based analysis to calculate results from the actual dataset instead of relying on guesses.
 
-- **Python:** Application logic and integration.
-- **Pandas:** Tabular data processing and numerical analysis.
-- **Streamlit:** User interface.
-- **Ollama:** Local language model execution.
-- **Qwen 2.5 3B:** Local model used for agent reasoning and tool selection.
-- **SQLite:** Persistent memory storage.
-- **Matplotlib and Plotly:** Visualization libraries, where used by the application.
+### 📂 CSV Data Analysis
+- Upload CSV datasets for analysis.
+- Inspect dataset structure and columns.
+- Generate summary statistics for numerical data.
+- Group data and perform aggregations such as sum.
+- Analyze missing values.
+- Examine correlations between numerical columns.
+- Detect numerical outliers.
+- Analyze trends using date and value columns.
 
-## Analysis Tools
+### 📊 Interactive Visualizations
+Explore your data with interactive Plotly charts, including:
+- Bar charts
+- Line charts
+- Scatter plots
+- Histograms
+- Box plots
 
-DataPilot includes seven distinct analysis tools:
+### 🧠 Persistent Memory
+- Save preferences and other useful information.
+- Retrieve previously saved memories.
+- View and delete individual memories.
+- Clear saved memories when needed.
+- Store memory locally in an SQLite database.
 
-1. `inspect_dataset` — Inspects dataset dimensions, columns, data types, missing values, and a data preview.
-2. `summary_statistics` — Calculates statistics such as count, mean, median, minimum, maximum, standard deviation, and sum.
-3. `group_and_aggregate` — Groups data by a selected column and calculates supported aggregations such as sum, mean, median, minimum, maximum, or count.
-4. `missing_value_analysis` — Identifies missing values in dataset columns.
-5. `correlation_analysis` — Calculates Pearson correlation between two numeric columns.
-6. `detect_outliers` — Identifies potential outliers using the IQR method.
-7. `analyze_trend` — Aggregates date-based data at supported time intervals.
+### 🛠️ Beginner-Friendly Experience
+- Ask questions in natural language.
+- View tool calls and their results when available in the application.
+- Explore datasets and visualizations through a Streamlit interface.
 
-The agent can select an appropriate tool based on the user's question. Numerical answers should be grounded in the results returned by the analysis tools rather than generated from model knowledge alone.
+---
 
-## Persistent Memory
+## 🖥️ Technology Stack
 
-DataPilot includes a persistent memory component backed by SQLite.
+| Technology | Purpose |
+|---|---|
+| Python | Core programming language |
+| Streamlit | Interactive web application |
+| Pandas | Data processing and analysis |
+| Google Gen AI SDK | Gemini API integration |
+| Ollama | Local language-model integration |
+| SQLite | Persistent memory storage |
+| Plotly | Interactive charts |
+| Matplotlib | Additional plotting support |
 
-Users can save, view, and delete memories through the application's memory interface. Saved memories can provide relevant context to the agent in later interactions, including after refreshing or reopening the application.
+---
 
-Memory is separate from the analysis tools: it provides contextual information, while Pandas-based tools perform the actual dataset calculations.
+## 📸 Screenshots
 
-The SQLite memory database is generated locally and should not be committed to the public repository.
+Screenshots help visitors understand the application before installing it.
 
-## Requirements
+Once you capture screenshots of your working application, save them in a folder named `docs/images/` in the repository.
 
-- Windows 10 or Windows 11
-- Python 3.10 or newer
-- Git, or a downloaded ZIP of the repository
-- Ollama for Windows
-- Sufficient disk space for the selected language model
+Recommended screenshots:
 
-A computer with 8 GB RAM may run a small model such as `qwen2.5:3b`, although performance depends on available memory and hardware.
+1. **Main dashboard** — show the DataPilot interface and AI provider selector.
+2. **CSV analysis** — show an uploaded dataset and a question with its answer.
+3. **Interactive charts** — show one or more charts generated by the application.
+4. **Persistent memory** — show the memory controls and saved memories.
+5. **Analysis tools** — show an example of tool-based analysis and its results.
 
-## Installation and Setup
+After adding the images, uncomment or adapt the following Markdown:
 
-### 1. Install Ollama and download the model
+```markdown
+## Application Preview
 
-Install Ollama from:
+![DataPilot dashboard](![alt text](<Screenshot 2026-10-12 221620.png>))
 
-https://ollama.com/download/windows
+![Interactive charts](![alt text](<Screenshot 2026-10-12 221843.png>))
+
+![Persistent memory controls](![alt text](<Screenshot 2026-10-12 221944.png>))
+```
+
+Use the actual filenames of the screenshots you add. Do not leave broken image links in the published README.
+
+---
+
+## 📋 Prerequisites
+
+Before running DataPilot, install:
+
+- Python 3.10 or a compatible newer Python version supported by your dependencies.
+- Git, if you want to clone the repository.
+- An internet connection for installing dependencies and using Gemini.
+- **For Gemini:** a Gemini API key.
+- **For Ollama:** Ollama installed locally and the model `qwen2.5:3b` available on your machine.
+
+Ollama and Gemini have different requirements. You do not need a local Ollama model to use the Gemini backend, or a Gemini API key to use the Ollama backend.
+
+---
+
+## ⚙️ Installation on Windows
+
+### 1. Clone the repository
 
 Open PowerShell and run:
 
 ```powershell
-ollama --version
-ollama pull qwen2.5:3b
-ollama list
-```
-
-To test the model:
-
-```powershell
-ollama run qwen2.5:3b
-```
-
-Ask a short question and type `/bye` to exit.
-
-Ollama normally provides its local API at `http://localhost:11434`.
-
-### 2. Download the project
-
-Clone the repository:
-
-```powershell
 git clone https://github.com/arnavj367/DataPilot.git
-```
-
-Replace `YOUR_PUBLIC_GITHUB_REPOSITORY_URL` with the actual URL of this repository.
-
-Move into the project directory:
-
-```powershell
 cd DataPilot
 ```
 
-If you downloaded a ZIP instead, extract it and open PowerShell in the extracted project folder.
+If you already have the project downloaded, open PowerShell in your project directory instead.
 
-### 3. Create a virtual environment
+### 2. Create a virtual environment
 
 ```powershell
-py -3 -m venv .venv
+python -m venv .venv
+```
+
+Activate it:
+
+```powershell
 .\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, you can run the commands below without activating the environment by using `.venv\Scripts\python.exe` instead of `python`.
+
+### 3. Install dependencies
+
+```powershell
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-If PowerShell blocks virtual-environment activation, run this in the current terminal:
+### 4. Configure the Gemini API key
+
+Create a file named `secrets.toml` inside the `.streamlit` directory.
+
+The path should be:
+
+```text
+.streamlit/secrets.toml
+```
+
+Add the following configuration:
+
+```toml
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+```
+
+Replace the placeholder with your own API key.
+
+Keep this file private. It should not be committed to GitHub. The project's `.gitignore` should exclude `.streamlit/secrets.toml`.
+
+**Never publish your real API key in source code, screenshots, README examples, or public commits.**
+
+### 5. Set up Ollama (optional)
+
+Install Ollama from its official website:
+
+https://ollama.com/
+
+Then download the model used by the current application:
 
 ```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
+ollama pull qwen2.5:3b
 ```
 
-Alternatively, use `.venv\Scripts\python.exe` directly without activating the environment.
+Make sure Ollama is running before selecting the Ollama backend in DataPilot.
 
-### 4. Test the analysis tools
+### 6. Start DataPilot
 
-```powershell
-python test_tools.py
-```
-
-This smoke test checks the analysis tools and sample data without requiring an AI model call.
-
-### 5. Test the agent
-
-Ensure Ollama is running and the model has been downloaded:
-
-```powershell
-python test_agent.py
-```
-
-The sample sales dataset has these expected revenue totals by region:
-
-- East: 60,000
-- North: 93,000
-- South: 125,000
-- West: 75,000
-
-Therefore, South should have the highest total revenue. The model's explanation may vary, but the numerical result should come from the analysis tool.
-
-### 6. Launch the application
+Run:
 
 ```powershell
 python -m streamlit run app.py
 ```
 
-Open the local URL displayed by Streamlit, usually:
+Streamlit will display a local URL in the terminal. Open that URL in your browser to use DataPilot.
 
-http://localhost:8501
+---
 
-## Project Structure
+## 📖 How to Use DataPilot
+
+1. Start the Streamlit application.
+2. Choose the AI provider you want to use.
+3. Configure the provider's requirements if necessary.
+4. Upload a CSV dataset or use the sample dataset option if available in your version.
+5. Ask a question about the dataset in natural language.
+6. Review the answer and any analysis-tool results.
+7. Explore the interactive charts.
+8. Save useful preferences in the persistent-memory section if desired.
+
+### Example questions
+
+Try questions such as:
+
+- "Inspect this dataset and explain its structure."
+- "Give me summary statistics for the Sales column."
+- "Calculate total Sales for each Region."
+- "Find missing values in the dataset."
+- "Check the correlation between Price and Quantity."
+- "Detect outliers in the Revenue column."
+- "Analyze monthly trends using the Date and Sales columns."
+
+Use the exact column names present in your uploaded CSV.
+
+The result of a question depends on the columns and values in the dataset. These are examples, not guaranteed results for every CSV file.
+
+---
+
+## 🧠 How Persistent Memory Works
+
+DataPilot uses SQLite to store saved memories in a local database named:
 
 ```text
-DataPilot/
-├── app.py
-├── agent.py
-├── tools.py
-├── memory.py
-├── requirements.txt
-├── test_agent.py
-├── test_tools.py
-├── README.md
-└── data/
-    └── sample_sales.csv
+datapilot_memory.db
 ```
 
-- `app.py` — Streamlit user interface.
-- `agent.py` — AI agent and tool-selection logic.
-- `tools.py` — Dataset analysis functions.
-- `memory.py` — Persistent memory functionality.
-- `requirements.txt` — Python dependencies.
-- `test_tools.py` — Analysis-tool smoke tests.
-- `test_agent.py` — Agent smoke test.
-- `data/sample_sales.csv` — Example dataset.
+The memory system supports saving, retrieving, viewing, and deleting memories. The AI agent can include saved memories in its system prompt to personalize responses.
 
-## Troubleshooting
+Memory is stored locally in the project by default. Treat the database as private if it contains personal or sensitive information.
 
-### `ollama` is not recognized
+When using Gemini, information included in prompts is sent to Google's API. Use only information you are comfortable sending to your selected AI provider.
 
-Close and reopen PowerShell after installing Ollama. If the issue persists, check the installation and Windows PATH.
+---
 
-### Cannot connect to Ollama
+## 🧰 Available Analysis Tools
 
-Open the Ollama application and confirm that it is running. Check available models with:
+DataPilot includes seven analysis tools:
+
+| Tool | Purpose |
+|---|---|
+| `inspect_dataset(df)` | Inspect dataset structure |
+| `summary_statistics(df, column)` | Calculate statistics for a column |
+| `group_and_aggregate(df, group_column, value_column, operation='sum')` | Aggregate values by group |
+| `missing_value_analysis(df)` | Examine missing values |
+| `correlation_analysis(df, column_a, column_b)` | Analyze relationships between numerical columns |
+| `detect_outliers(df, column)` | Identify potential numerical outliers |
+| `analyze_trend(df, date_column, value_column, frequency='MS')` | Analyze time-based trends |
+
+These tools are intended to provide data-grounded results for the AI assistant to explain in beginner-friendly language.
+
+---
+
+## 🔐 Security and Privacy
+
+- Never commit `.streamlit/secrets.toml`.
+- Do not hardcode API keys in Python files.
+- Keep local databases and sensitive CSV files out of public commits when appropriate.
+- Review `.gitignore` before pushing changes.
+- Remember that Gemini is a cloud service: prompts and relevant data sent to its API leave your local machine.
+- Ollama processes prompts locally when using the local model, although other application components may still use network access.
+
+---
+
+## 🛠️ Troubleshooting
+
+### `streamlit` is not recognized
+
+Use:
+
+```powershell
+python -m streamlit run app.py
+```
+
+If Streamlit is missing, install the dependencies:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+### Gemini API key is missing
+
+Check that `.streamlit/secrets.toml` exists and contains:
+
+```toml
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+```
+
+Restart the application after updating the configuration. Do not paste your real API key into public issues or messages.
+
+### Gemini returns an error
+
+- Verify that the API key is valid.
+- Check the model name configured in the application.
+- Confirm that your internet connection is working.
+- Check the API provider's usage limits and service status.
+- If you see a model-not-found error, verify the model name supported by your API account.
+
+### Ollama cannot connect
+
+- Confirm that Ollama is installed and running.
+- Check whether the required model is available:
 
 ```powershell
 ollama list
 ```
 
-### Model not found
-
-Download the required model:
+- If necessary, download the model:
 
 ```powershell
 ollama pull qwen2.5:3b
 ```
 
-Ensure that the model name configured in the application matches the downloaded model.
+### A CSV file fails to load
 
-### Tool calls are not working correctly
+- Confirm that the file is a valid CSV.
+- Check for unusual delimiters, encoding problems, or malformed rows.
+- Ensure the dataset contains the columns required by your question.
+- Try a smaller or simpler CSV to isolate the issue.
 
-Smaller language models may occasionally select or format tools incorrectly. Begin with simple questions, such as:
+### A chart does not appear
 
-"Which region has the highest total Revenue?"
-
-### Port 8501 is already in use
-
-Start Streamlit on another port:
+- Check that the selected columns exist.
+- Ensure the chosen chart type is appropriate for the data.
+- Verify that the required dependencies are installed:
 
 ```powershell
-python -m streamlit run app.py --server.port 8502
+python -m pip install -r requirements.txt
 ```
 
-## Privacy and Cost
+### Memory does not appear to persist
 
-DataPilot uses an Ollama process running locally on the user's computer. With the local model configuration, the project does not require a third-party model API key or per-token API billing.
+- Confirm that you saved the memory using the application controls.
+- Check that the application can write to the project directory.
+- Do not delete `datapilot_memory.db` if you want to preserve your saved memories.
 
-Prompts and dataset-derived tool results are sent to the local Ollama process for inference. Installing dependencies and downloading the model require internet access.
+---
 
-Users should avoid uploading confidential datasets or storing sensitive information in saved memories when using a public or shared computer.
+## 🗺️ Project Structure
 
-## Limitations
+The main files used by DataPilot include:
 
-- Analysis is limited to the operations supported by the available tools.
-- Language-model tool selection and explanations may vary.
-- Performance depends on the computer's hardware and the selected model.
-- The application requires a compatible local Ollama installation and an available model.
+```text
+DataPilot/
+├── app.py                  # Streamlit application
+├── agent.py                # Ollama and Gemini agent logic
+├── tools.py                # Data-analysis tools
+├── memory.py               # SQLite persistent memory
+├── requirements.txt        # Python dependencies
+├── .gitignore              # Excluded files and secrets
+├── .streamlit/
+│   └── secrets.toml        # Local secrets; do not commit
+├── docs/
+│   └── images/             # README screenshots (add these)
+└── README.md               # Project documentation
+```
 
-## License
+The `.streamlit/secrets.toml` file and `datapilot_memory.db` are local runtime files; they may not exist in a fresh clone.
 
-No license has been specified yet. Add an appropriate license if you want to grant the community explicit permissions to reuse, modify, or redistribute this project.
+---
+
+## 🚀 Future Improvements
+
+Potential future enhancements include:
+
+- Automated tests for analysis tools.
+- More advanced chart customization.
+- Improved error messages and provider diagnostics.
+- Additional data sources and export options.
+- Deployment with secure cloud configuration.
+
+These are possible future enhancements, not claims about features currently implemented.
+
+---
+
+## 🤝 Contributing
+
+Contributions, bug reports, and suggestions are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make and test your changes.
+4. Submit a pull request describing the change.
+
+Please do not include API keys, private datasets, or local database files in contributions.
+
+---
+
+## 📄 License
+
+Check the repository for a `LICENSE` file before reusing or redistributing this project. If no license is present, contact the repository owner regarding reuse permissions.
+
+---
+
+## 👨‍💻 Author
+
+**Arnav Jain**
+
+GitHub: [@arnavj367](https://github.com/arnavj367)
+
+Project repository: [DataPilot](https://github.com/arnavj367/DataPilot)
+
+---
+
+*DataPilot — turning raw data into understandable insights.*
